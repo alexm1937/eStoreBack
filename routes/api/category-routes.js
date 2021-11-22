@@ -29,7 +29,13 @@ router.get('/:id', (req, res) => {
       }
     ]
   })
-  .then(dbCategoryData => res.json(dbCategoryData))
+  .then(dbCategoryData => {
+    if(!dbCategoryData) {
+      res.status(404).json({message: 'No category found with this ID'});
+      return;
+    }
+    res.json(dbCategoryData);
+  })
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
@@ -49,7 +55,13 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   Category.update(req.body, {where: {id: req.params.id}})
-  .then(dbCategoryData => res.status(200).json(dbCategoryData))
+  .then(dbCategoryData => {
+    if(!dbCategoryData) {
+      res.status(404).json({message: 'No category found with this ID'});
+      return;
+    }
+    res.json(dbCategoryData);
+  })
   .catch(err => {
     console.log(err);
     res.status(400).json(err);

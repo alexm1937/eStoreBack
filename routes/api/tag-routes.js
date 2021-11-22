@@ -33,15 +33,21 @@ router.get('/:id', (req, res) => {
       }
     ]
   })
-  .then(dbTagData => res.json(dbTagData))
+  .then(dbTagData => {
+    if(!dbTagData) {
+      res.status(404).json({message: 'No tag found with this ID'});
+      return;
+    }
+    res.json(dbTagData);
+  })
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
   });
 });
 
-  // create a new tag
-  // params of tag_name(color)
+// create a new tag
+// params of tag_name(color)
 router.post('/', (req, res) => {
   Tag.create(req.body)
   .then(dbTagData => res.status(200).json(dbTagData))
