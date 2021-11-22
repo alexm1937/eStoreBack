@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
-  // be sure to include its associated Product data
+
 router.get('/', (req, res) => {
   Tag.findAll({
     include: [
@@ -39,8 +39,17 @@ router.get('/:id', (req, res) => {
     res.status(500).json(err);
   });
 });
+
+
 router.post('/', (req, res) => {
   // create a new tag
+  // params of tag_name(color)
+  Tag.create(req.body)
+  .then(dbTagData => res.status(200).json(dbTagData))
+  .catch(err => {
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 router.put('/:id', (req, res) => {
