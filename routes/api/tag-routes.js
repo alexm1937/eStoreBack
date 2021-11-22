@@ -43,7 +43,7 @@ router.get('/:id', (req, res) => {
   // create a new tag
   // params of tag_name(color)
 router.post('/', (req, res) => {
-Tag.create(req.body)
+  Tag.create(req.body)
   .then(dbTagData => res.status(200).json(dbTagData))
   .catch(err => {
     console.log(err);
@@ -52,7 +52,12 @@ Tag.create(req.body)
 });
 
 router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+  Tag.update(req.body, {where: {id: req.params.id}})
+  .then(dbTagData => res.status(200).json(dbTagData))
+  .catch(err => {
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 router.delete('/:id', (req, res) => {

@@ -36,7 +36,8 @@ router.get('/:id', (req, res) => {
   });
 });
 
-// req.body should have params
+// create new categories
+// req.body should have params of category_name
 router.post('/', (req, res) => {
   Category.create(req.body)
   .then(dbCategoryData => res.status(200).json(dbCategoryData))
@@ -47,7 +48,12 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  // update a category by its `id` value
+  Category.update(req.body, {where: {id: req.params.id}})
+  .then(dbCategoryData => res.status(200).json(dbCategoryData))
+  .catch(err => {
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 router.delete('/:id', (req, res) => {
