@@ -37,7 +37,10 @@ router.get('/:id', (req, res) => {
       {
         model: Tag,
         as: 'tag',
-        attributes: ['tag_name']
+        attributes: {
+          include: ['tag_name'],
+          exclude: ['product_tag']
+        }
       }
     ]
   })
@@ -47,7 +50,6 @@ router.get('/:id', (req, res) => {
     res.status(500).json(err);
   });
 });
-
 
 // create new product
 router.post('/', (req, res) => {

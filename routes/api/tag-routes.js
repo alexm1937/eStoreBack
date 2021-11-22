@@ -40,11 +40,10 @@ router.get('/:id', (req, res) => {
   });
 });
 
-
-router.post('/', (req, res) => {
   // create a new tag
   // params of tag_name(color)
-  Tag.create(req.body)
+router.post('/', (req, res) => {
+Tag.create(req.body)
   .then(dbTagData => res.status(200).json(dbTagData))
   .catch(err => {
     console.log(err);
